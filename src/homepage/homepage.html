@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cause:wght@100..900&family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #000000, #482020);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Hamburger Navigation */
+        nav {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        nav ol {
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ol.active {
+            display: flex;
+        }
+
+        nav li {
+            display: flex;
+            align-items: center;
+        }
+
+        nav li:not(:last-child)::after {
+            content: '';
+            display: none;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        nav li.active a {
+            color: white;
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Playwrite Font */
+        .playwrite-title {
+            font-family: "Playwrite GB J", cursive;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        /* Cause Font */
+        .cause-text {
+            font-family: "Cause", cursive;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        .heading {
+            text-align: center;
+            padding: 80px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .heading h1 {
+            font-size: 95px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .heading p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .about p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 80px 40px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .skills h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .skill-card p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 80px 40px;
+        }
+
+        .projects h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .project-link {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #ff8787;
+            text-decoration: underline;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 40px;
+            background-color: rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 30px;
+            border: 2px solid white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.4);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 80px 40px;
+        }
+
+        .experience h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .experience-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .experience-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .experience-card:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .exp-header h3 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .exp-date {
+            font-size: 14px;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .company {
+            font-size: 16px;
+            color: #ff9a9e;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .exp-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .exp-list li {
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .exp-list li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #ff9a9e;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ol id="breadcrumb">
+            <li class="active"><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ol>
+    </nav>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const breadcrumb = document.getElementById('breadcrumb');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            breadcrumb.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        breadcrumb.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                breadcrumb.classList.remove('active');
+            });
+        });
+
+        // Active section tracking
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const breadcrumbs = document.querySelectorAll('#breadcrumb li');
+            let currentSection = 'home';
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) {
+                    currentSection = section.id;
+                }
+            });
+
+            breadcrumbs.forEach(breadcrumb => {
+                breadcrumb.classList.remove('active');
+                const link = breadcrumb.querySelector('a');
+                if (link && link.getAttribute('href') === `#${currentSection}`) {
+                    breadcrumb.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    <!-- Home Section -->
+    <section id="home" class="heading">
+        <h1 class="cause-text">Harini Rajan's Portfolio</h1>
+        <p class="cause-text">
+            Fullstack & ServiceNow Developer
+        </p>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2 class="cause-text">About Me</h2>
+        <p>
+            Software Engineer with enterprise experience at LTM, specializing in backend and full-stack application development. Proficient in Java, Spring Boot, RESTful API development, JavaScript, Angular, React, and database technologies including MySQL and MongoDB. Experienced in designing, developing, and maintaining scalable, API-driven applications while collaborating with cross-functional teams in Agile environments.
+        </p>
+        <p>
+            Skilled in building robust backend services, integrating enterprise platforms, and delivering high-quality software solutions. Certified ServiceNow System Administrator with expertise in Flow Designer and Agile development methodologies.
+        </p>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <h2 class="cause-text">Professional Experience</h2>
+        <div class="experience-container">
+            <div class="experience-card">
+                <div class="exp-header">
+                    <h3 class="cause-text">Software Engineer</h3>
+                    <span class="exp-date">Sep 2025 – Present</span>
+                </div>
+                <p class="company">LTM – SharePoint Enterprise Application</p>
+                <ul class="exp-list">
+                    <li>Maintained and enhanced enterprise SharePoint-based applications, streamlining internal business workflows</li>
+                    <li>Analyzed complex workflow configurations and backend data structures ensuring 100% data integrity</li>
+                    <li>Conducted API validation and cross-environment backend data verification during deployments</li>
+                    <li>Collaborated with cross-functional teams in defect triage and root cause analysis</li>
+                </ul>
+            </div>
+            <div class="experience-card">
+                <div class="exp-header">
+                    <h3 class="cause-text">Graduate Apprentice – Full Stack (MEAN)</h3>
+                    <span class="exp-date">Jun 2025 – Aug 2025</span>
+                </div>
+                <p class="company">LTM</p>
+                <ul class="exp-list">
+                    <li>Completed structured full-stack development training on MongoDB, Express JS, Angular, and Node.js</li>
+                    <li>Built full-stack applications implementing RESTful APIs with CRUD operations</li>
+                    <li>Applied modular architecture principles and authentication mechanisms</li>
+                    <li>Developed maintainable and scalable applications with structured routing practices</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h2 class="cause-text">Skills</h2>
+        <div class="skills-container">
+            <div class="skill-card">
+                <h3 class="cause-text">Programming Languages</h3>
+                <p>Java, JavaScript, C++</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="cause-text">Frontend Technologies</h3>
+                <p>Angular, React, HTML5, CSS3, JSON, Responsive Design</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="cause-text">Backend Development</h3>
+                <p>Spring Boot, Node.js, Express JS, REST APIs, Microservices</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="cause-text">Databases</h3>
+                <p>MySQL, MongoDB, Database Design, Query Optimization</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="cause-text">Enterprise Platforms</h3>
+                <p>ServiceNow (CSA, Flow Designer), SharePoint</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="cause-text">Tools & Methodologies</h3>
+                <p>Git, Maven, Postman, Agile, Scrum, SDLC</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <h2 class="cause-text">Projects</h2>
+        <div class="projects-container">
+            <div class="project-card">
+                <h3 class="cause-text">Receptoria</h3>
+                <p>Full-stack recipe management platform built with React, Spring Boot, and MySQL. Optimized API response times by 20% through efficient system design and layered architecture. Implemented relational database schemas with optimized queries.</p>
+            </div>
+            <div class="project-card">
+                <h3 class="cause-text">Work Buddy</h3>
+                <p>Employee management system developed using MEAN Stack with authentication and role-based access control (RBAC). Designed 5+ MongoDB collections with indexed queries for optimized data retrieval and improved query performance.</p>
+            </div>
+            <div class="project-card">
+                <h3 class="cause-text">Green Garden</h3>
+                <p>Inventory management application using Angular for frontend and Node.js with Express JS for backend APIs. Built high-fidelity wireframes and UI mockups for seamless plant management workflows with structured MongoDB collections.</p>
+            </div>
+            <div class="project-card">
+                <h3 class="cause-text">ServiceNow Project</h3>
+                <p>Employee onboarding and offboarding automation using Flow Designer and Business Rules. Configured Service Catalog items, approval workflows, and implemented 3+ REST API integrations for external system data exchange.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="cause-text">Get In Touch</h2>
+        <p>Based in Chennai, India | Let's connect and create amazing solutions together</p>
+        <div class="contact-links">
+            <a href="mailto:harinirajan2610@gmail.com" class="contact-btn">Email</a>
+            <a href="https://www.linkedin.com/in/harini-rajan26" class="contact-btn">LinkedIn</a>
+            <a href="https://github.com/Harini-Rajan-Yadhav" class="contact-btn">GitHub</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 16px;">
+            Phone: +91-7010442058
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 My Portfolio. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
